@@ -23,18 +23,18 @@ for i in range(5):
         
         X.append(flat_img)
         y.append(is_char[i+1])
-
-    
 print("Reading images completed.")
-
-clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
+    
 print("Fit started...")
+clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
 clf.fit(X, y)
 print("Fit started completed.")
 
-n = 20
-while n:
-    ind = randint(0, len(y))
-    print(clf.predict(X[ind].reshape(1, -1)))
-    print(y[ind])
-    n-=1
+for i in X:clf.predict(i.reshape(1, -1))
+print(clf.score(X, y))
+
+
+import pickle
+os.system("rm -rf sav; mkdir -p sav")
+filename = './sav/model.sav'
+pickle.dump(clf, open(filename, 'wb'))
