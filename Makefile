@@ -1,4 +1,6 @@
-run:
+all:	train predict
+
+train:
 	python3 main.py
-p:
+predict:
 	python3 predictor.py

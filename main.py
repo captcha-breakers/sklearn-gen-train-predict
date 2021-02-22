@@ -1,32 +1,50 @@
 from sklearn import svm
 import numpy as np
 import pickle
+from sklearn.model_selection import cross_val_score
 import os
 import cv2
+import random
 
-base_dir = "./Bmp/"
-is_char = {1 : '0',2 : '1',3 : '2',4 : '3',5 : '4',6 : '5',7 : '6',8 : '7',9 : '8',10 : '9',11 : 'A',12 : 'B',13 : 'C',14 : 'D',15 : 'E',16 : 'F',17 : 'G',18 : 'H',19 : 'I',20 : 'J',21 : 'K',22 : 'L',23 : 'M',24 : 'N',25 : 'O',26 : 'P',27 : 'Q',28 : 'R',29 : 'S',30 : 'T',31 : 'U',32 : 'V',33 : 'W',34 : 'X',35 : 'Y',36 : 'Z',37 : 'a',38 : 'b',39 : 'c',40 : 'd',41 : 'e',42 : 'f',43 : 'g',44 : 'h',45 : 'i',46 : 'j',47 : 'k',48 : 'l',49 : 'm',50 : 'n',51 : 'o',52 : 'p',53 : 'q',54 : 'r',55 : 's',56 : 't',57 : 'u',58 : 'v',59 : 'w',60 : 'x',61 : 'y',62 : 'z'}
+base_dir = "./input/"
 
-X,y=[],[]
+images = []
 
 print("Reading images...")
-for i in range(62):
-    each_dir = "Sample"+str(i+1).zfill(3)+"/"
-    files = os.listdir(base_dir+each_dir)
-    for file in files[:50]:
-        img = cv2.imread(base_dir+each_dir+file, cv2.IMREAD_GRAYSCALE)
+for f in os.listdir(base_dir):
+    for file in os.listdir(base_dir+f)[:1000]:
+        img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = cv2.resize(img, (20, 20)) 
         
         img = np.array(img).ravel()
-        flat_img = img.reshape(-1) 
+        img = img.reshape(-1) 
         
-        X.append(flat_img)
-        y.append(is_char[i+1])
-    print(i, " iteration completed.")
+        images.append((img, file[0]))
+    print(f)
+random.shuffle(images)
 print("Reading images completed.")
 
+def cross_validation(model, num_of_fold, train_data, train_label):
+    # this uses the concept of cross validation to measure the accuracy
+    # of a model, the num_of_fold determines the type of validation
+    # e.g if num_of_fold is 4, then we are performing a 4-fold cross validation
+    # it will divide the dataset into 4 and use 1/4 of it for testing
+    # and the remaining 3/4 for the training
+    accuracy_result = cross_val_score(model, train_data, train_label,
+                                      cv=num_of_fold)
+    print("Cross Validation Result for ", str(num_of_fold), " -fold")
+
+    print(accuracy_result * 100)
+
+
 print("Fit started...")
+X,y = [],[]
+for i in images: 
+    X.append(i[0]) 
+    y.append(i[1])
 clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
+cross_validation(clf, 5, X, y)
+
 clf.fit(X, y)
 print("Fit started completed.")
 
@@ -34,5 +52,9 @@ os.system("rm -rf sav; mkdir -p sav")
 filename = './sav/model.sav'
 pickle.dump(clf, open(filename, 'wb'))
 print("SAV generation complete.")
-# for i in X:clf.predict(i.reshape(1, -1))
-# print(clf.score(X, y))
+
+
+for i in X:clf.predict(i.reshape(1, -1))
+print(clf.score(X, y))
+
+# print(y)
