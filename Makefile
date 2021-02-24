@@ -1,7 +1,7 @@
-all:	g t p
-
-g:
-	python3 gen.py
+char:
+	python3 char-gen.py
+cap:
+	python3 captcha-gen.py
 t:
 	python3 train.py
 p:

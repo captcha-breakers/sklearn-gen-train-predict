@@ -17,7 +17,8 @@ images = []
     # cv2.destroyAllWindows()
 
 print("Reading images...")
-for f in os.listdir(base_dir):
+# for f in os.listdir(base_dir):
+for f in ['A', 'B', 'C']:
     for file in os.listdir(base_dir+f)[:1000]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = np.invert(img)

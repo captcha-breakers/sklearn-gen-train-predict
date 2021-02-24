@@ -1,14 +1,14 @@
 from skimage import measure
 from skimage.measure import regionprops
 import numpy as np
-import cv2
-import matplotlib.pyplot as plt
 import pickle
+import cv2
 import os
 
 base_dir = "./in/"
 
 for filename in os.listdir(base_dir):
+    """Segmentation"""
     image = cv2.imread(base_dir+filename)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
     _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY)
@@ -24,7 +24,6 @@ for filename in os.listdir(base_dir):
     captcha = np.invert(mea_image[0])
     labelled_captcha = measure.label(captcha)
 
-    fig, ax1 = plt.subplots(1)
     character_dimensions = (0.20*captcha.shape[0], 0.8*captcha.shape[0], 0.03*captcha.shape[1], 0.25*captcha.shape[1])
     min_height, max_height, min_width, max_width = character_dimensions
 
