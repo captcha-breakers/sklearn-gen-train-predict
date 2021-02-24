@@ -5,15 +5,23 @@ from sklearn.model_selection import cross_val_score
 import os
 import cv2
 import random
+random.seed(42)
 
-base_dir = "./input/"
+base_dir = "./out/"
 
 images = []
+# def showImage(img):
+    # cv2.imwrite("./imd/"+str(random())+".png", img)
+    # cv2.imshow("imageShow", img)
+    # cv2.waitKey(1000)
+    # cv2.destroyAllWindows()
 
 print("Reading images...")
 for f in os.listdir(base_dir):
     for file in os.listdir(base_dir+f)[:1000]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
+        img = np.invert(img)
+        # showImage(img)
         img = cv2.resize(img, (20, 20)) 
         
         img = np.array(img).ravel()
@@ -21,6 +29,7 @@ for f in os.listdir(base_dir):
         
         images.append((img, file[0]))
     print(f)
+
 random.shuffle(images)
 print("Reading images completed.")
 
@@ -33,18 +42,14 @@ def cross_validation(model, num_of_fold, train_data, train_label):
     accuracy_result = cross_val_score(model, train_data, train_label,
                                       cv=num_of_fold)
     print("Cross Validation Result for ", str(num_of_fold), " -fold")
-
     print(accuracy_result * 100)
-
 
 print("Fit started...")
 X,y = [],[]
-for i in images: 
+for i in images:
     X.append(i[0]) 
     y.append(i[1])
 clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
-cross_validation(clf, 5, X, y)
-
 clf.fit(X, y)
 print("Fit started completed.")
 
@@ -53,8 +58,11 @@ filename = './sav/model.sav'
 pickle.dump(clf, open(filename, 'wb'))
 print("SAV generation complete.")
 
+cross_validation(clf, 5, X, y)
+print("Cross validation complete.")
 
 for i in X:clf.predict(i.reshape(1, -1))
 print(clf.score(X, y))
+print("Score complete.")
 
 # print(y)

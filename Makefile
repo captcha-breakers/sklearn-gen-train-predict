@@ -1,6 +1,8 @@
-all:	train predict
+all:	g t p
 
-train:
-	python3 main.py
-predict:
-	python3 predictor.py
+g:
+	python3 gen.py
+t:
+	python3 train.py
+p:
+	python3 predict.py
