@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import pickle
 import os
 
+base_dir = "./in/"
 
-for filename in os.listdir("./input/"):
-    image = cv2.imread("./input/"+filename)
+for filename in os.listdir(base_dir):
+    image = cv2.imread(base_dir+filename)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
     _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY)
 
@@ -45,7 +46,7 @@ for filename in os.listdir("./input/"):
             
             resized_char = cv2.resize(roi,(20,20))
             characters.append((x0, resized_char))
-            print(regions.bbox)
+            # print(regions.bbox)
 
 
 
@@ -65,4 +66,4 @@ for filename in os.listdir("./input/"):
     for i in res:
         ans+=str(i[1][0])
 
-    print(filename, " : ", ans)
+    print(filename[:6], " : ", ans)
