@@ -1,5 +1,7 @@
 PY:= python3
 
+new:
+	$(PY) new-char-gen.py
 char:
 	$(PY) char-gen.py
 cap:

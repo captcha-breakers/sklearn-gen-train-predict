@@ -25,7 +25,7 @@ for filename in os.listdir(base_dir):
 
     character_dimensions = (
         0.2*captcha.shape[0], 0.9*captcha.shape[0], 
-        0.05*captcha.shape[1], 0.2*captcha.shape[1]
+        0.05*captcha.shape[1], 0.5*captcha.shape[1]
     )
     min_height, max_height, min_width, max_width = character_dimensions
 
@@ -58,9 +58,9 @@ for filename in os.listdir(base_dir):
 
     res = []
     for i in characters:
-        x_p,y_p = 9, 9
+        x_p,y_p = 4, 4
         img = cv2.copyMakeBorder(i[1], x_p, x_p, y_p, y_p, cv2.BORDER_CONSTANT)
-        img = cv2.resize(img,(20,20))
+        img = cv2.resize(img,(50,50))
         
         # cv2.imshow("windows", img)
         # cv2.waitKey(1000)
@@ -69,14 +69,16 @@ for filename in os.listdir(base_dir):
         result = model.predict(img.reshape(1, -1))
         res.append((i[0], result))
 
-    res.sort(key = lambda x: x[0])  
+    res.sort(key = lambda x: x[0])
+    
     ans = ''
     for i in res:
         ans+=str(i[1][0])
 
-    print(filename[:-4], " : ", ans)
+    # print(filename[:-4], " : ", ans, " : ", filename[:-4] == ans)
     if filename[:-4] == ans:
         r+=1
     t+=1
+
 
 print("Accuracy: ", 100*r/t)

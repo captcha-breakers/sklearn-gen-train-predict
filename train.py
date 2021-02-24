@@ -8,7 +8,7 @@ import cv2
 import random
 random.seed(42)
 
-base_dir = "./chars/"
+base_dir = "./new_data/"
 
 images = []
 # def showImage(img):
@@ -18,18 +18,11 @@ images = []
     # cv2.destroyAllWindows()
 
 print("Reading images...")
-for f in os.listdir(base_dir):
-# for f in ascii_uppercase[:6]:
-    for file in os.listdir(base_dir+f)[:1000]:
+for f in ascii_uppercase:
+    for file in os.listdir(base_dir+f):
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
-        img = np.invert(img)
-        # _, thresh = cv2.threshold(img, 120, 255 , cv2.THRESH_BINARY)
-        
-        # showImage(img)
-        img = cv2.resize(img, (20,20))
-        
         img = np.array(img).ravel()
-        img = img.reshape(-1) 
+        img = img.reshape(-1)
         
         images.append((img, file[0]))
     print(f)
