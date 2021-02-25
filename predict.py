@@ -58,13 +58,13 @@ for filename in os.listdir(base_dir):
 
     res = []
     for i in characters:
-        x_p,y_p = 5,8
+        x_p,y_p = 9, 9
         img = cv2.copyMakeBorder(i[1], x_p, x_p, y_p, y_p, cv2.BORDER_CONSTANT)
         img = cv2.resize(img,(20,20))
         
-        cv2.imshow("windows", img)
-        cv2.waitKey(1000)
-        cv2.destroyAllWindows()
+        # cv2.imshow("windows", img)
+        # cv2.waitKey(1000)
+        # cv2.destroyAllWindows()
         
         result = model.predict(img.reshape(1, -1))
         res.append((i[0], result))
@@ -75,4 +75,3 @@ for filename in os.listdir(base_dir):
         ans+=str(i[1][0])
 
     print(filename[:-4], " : ", ans)
-    break

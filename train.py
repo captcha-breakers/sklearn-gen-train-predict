@@ -18,11 +18,13 @@ images = []
     # cv2.destroyAllWindows()
 
 print("Reading images...")
-# for f in os.listdir(base_dir):
-for f in ascii_uppercase[:6]:
+for f in os.listdir(base_dir):
+# for f in ascii_uppercase[:6]:
     for file in os.listdir(base_dir+f)[:1000]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = np.invert(img)
+        # _, thresh = cv2.threshold(img, 120, 255 , cv2.THRESH_BINARY)
+        
         # showImage(img)
         img = cv2.resize(img, (20,20))
         
