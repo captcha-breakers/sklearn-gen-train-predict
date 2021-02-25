@@ -9,7 +9,7 @@ import cv2
 import os
 
 base_dir = "./captchas/" # Input directory to predict from
-
+r,t=0,0
 for filename in os.listdir(base_dir):
     """Segmentation"""
     image = cv2.imread(base_dir+filename)
@@ -31,8 +31,8 @@ for filename in os.listdir(base_dir):
 
     characters = []
     column_list = []
-    fig, ax1 = plt.subplots(1)
-    ax1.imshow(captcha, cmap="gray")
+    # fig, ax1 = plt.subplots(1)
+    # ax1.imshow(captcha, cmap="gray")
 
     for regions in regionprops(labelled_captcha):
         y0, x0, y1, x1 = regions.bbox
@@ -42,11 +42,11 @@ for filename in os.listdir(base_dir):
         if region_height > min_height and region_height < max_height and region_width > min_width and region_width < max_width:
             roi = captcha[y0:y1, x0:x1]
             # draw a red bordered rectangle over the character.
-            rect_border = patches.Rectangle(
-                (x0-2, y0-2), x1 - x0 + 3, y1 - y0 + 3, 
-                edgecolor="red",linewidth=2, fill=False
-            )
-            ax1.add_patch(rect_border)
+            # rect_border = patches.Rectangle(
+            #     (x0-2, y0-2), x1 - x0 + 3, y1 - y0 + 3, 
+            #     edgecolor="red",linewidth=2, fill=False
+            # )
+            # ax1.add_patch(rect_border)
             characters.append((x0, roi))
             # print(regions.bbox)
     
@@ -75,3 +75,8 @@ for filename in os.listdir(base_dir):
         ans+=str(i[1][0])
 
     print(filename[:-4], " : ", ans)
+    if filename[:-4] == ans:
+        r+=1
+    t+=1
+
+print("Accuracy: ", 100*r/t)
