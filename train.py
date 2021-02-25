@@ -18,7 +18,7 @@ images = []
 
 print("Reading images...")
 # for f in os.listdir(base_dir):
-for f in ['a', 'b', 'c', 'd', 'e', 'f']:
+for f in ['A', 'B', 'C', 'D', 'E', 'F']:
     for file in os.listdir(base_dir+f)[:1000]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = np.invert(img)
@@ -42,15 +42,11 @@ def cross_validation(model, num_of_fold, train_data, train_label):
     # and the remaining 3/4 for the training
     accuracy_result = cross_val_score(
         model, train_data, train_label,cv=num_of_fold)
-    print("Cross Validation Result for ", str(num_of_fold), " -fold")
-    print(accuracy_result * 100)
+    print(str(num_of_fold), "-fold cross validation result: ", accuracy_result * 100)
 
 print("Fit started...")
 X,y = [],[]
-for i in images:
-    X.append(i[0]) 
-    y.append(i[1])
-print(y)
+for i in images:X.append(i[0]),y.append(i[1])
 clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
 clf.fit(X, y)
 print("Fit started completed.")
@@ -66,5 +62,3 @@ print("Cross validation complete.")
 for i in X:clf.predict(i.reshape(1, -1))
 print(clf.score(X, y))
 print("Score complete.")
-
-# print(y)

@@ -6,16 +6,16 @@ import os
 from string import ascii_uppercase, ascii_lowercase, digits
 
 for _ in range(1):
-    img=np.zeros(shape=(100,185,3),dtype=np.uint8)
+    img=np.zeros(shape=(70,185,3),dtype=np.uint8)
     img_raw=Image.fromarray(img+255)
     draw=ImageDraw.Draw(img_raw)
     font=ImageFont.truetype(font='./font/Roboto-Regular.ttf',size=40)
     my_cap = ''.join(choices(ascii_uppercase+ ascii_lowercase+ digits, k = 6)) 
 
-    my_cap = 'abcdef'
+    my_cap = 'ABCDEF'
 
     for i in range(6):
-        draw.text((5+5*i+25*i,25), my_cap[i],font=font,fill=(0,0,0))
+        draw.text((5+5*i+25*i,10), my_cap[i],font=font,fill=(0,0,0))
 
     img=np.array(img_raw)
 
