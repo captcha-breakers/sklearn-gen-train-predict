@@ -12,7 +12,7 @@ myfonts = [ImageFont.truetype(font="./font/"+i,size=80)
 
 all_char = ascii_uppercase+ascii_lowercase+digits
 
-for char in all_char:
+for char in ascii_uppercase[:6]:
     for count in range(1000):
         img=np.zeros(shape=(100,100,3),dtype=np.uint8)
         img=Image.fromarray(img+255)
