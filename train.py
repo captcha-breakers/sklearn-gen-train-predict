@@ -7,7 +7,7 @@ import cv2
 import random
 random.seed(42)
 
-base_dir = "./out/"
+base_dir = "./chars/"
 
 images = []
 # def showImage(img):
@@ -18,12 +18,12 @@ images = []
 
 print("Reading images...")
 # for f in os.listdir(base_dir):
-for f in ['A', 'B', 'C']:
+for f in ['a', 'b', 'c', 'd', 'e', 'f']:
     for file in os.listdir(base_dir+f)[:1000]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = np.invert(img)
         # showImage(img)
-        img = cv2.resize(img, (20, 20)) 
+        img = cv2.resize(img, (20,20))
         
         img = np.array(img).ravel()
         img = img.reshape(-1) 
@@ -40,8 +40,8 @@ def cross_validation(model, num_of_fold, train_data, train_label):
     # e.g if num_of_fold is 4, then we are performing a 4-fold cross validation
     # it will divide the dataset into 4 and use 1/4 of it for testing
     # and the remaining 3/4 for the training
-    accuracy_result = cross_val_score(model, train_data, train_label,
-                                      cv=num_of_fold)
+    accuracy_result = cross_val_score(
+        model, train_data, train_label,cv=num_of_fold)
     print("Cross Validation Result for ", str(num_of_fold), " -fold")
     print(accuracy_result * 100)
 
@@ -50,6 +50,7 @@ X,y = [],[]
 for i in images:
     X.append(i[0]) 
     y.append(i[1])
+print(y)
 clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
 clf.fit(X, y)
 print("Fit started completed.")

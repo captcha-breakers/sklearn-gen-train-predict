@@ -12,7 +12,7 @@ for _ in range(1):
     font=ImageFont.truetype(font='./font/Roboto-Regular.ttf',size=40)
     my_cap = ''.join(choices(ascii_uppercase+ ascii_lowercase+ digits, k = 6)) 
 
-    my_cap = 'abzabz'
+    my_cap = 'abcdef'
 
     for i in range(6):
         draw.text((5+5*i+25*i,25), my_cap[i],font=font,fill=(0,0,0))
@@ -29,4 +29,4 @@ for _ in range(1):
     #         elif rdn > 1-thresh:
     #             img[i][j] = 255
 
-    cv2.imwrite("./in/"+my_cap+".png",img)
+    cv2.imwrite("./captchas/"+my_cap+".png",img)

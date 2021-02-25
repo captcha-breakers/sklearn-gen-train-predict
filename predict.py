@@ -5,23 +5,21 @@ import pickle
 import cv2
 import os
 
-base_dir = "./in/"
+base_dir = "./captchas/"
 
 for filename in os.listdir(base_dir):
     """Segmentation"""
+    filename = "abcdef.png"
     image = cv2.imread(base_dir+filename)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
     _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY)
-
 
 
     cnts, new = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     cnts=sorted(cnts, key = cv2.contourArea, reverse = True)[:30] 
     new_image = cv2.drawContours(image,cnts,-1,(0,255,0),1)
     NumberPlateCnt = None 
-    mea_image = []
-    mea_image.append(thresh[:, :])
-    captcha = np.invert(mea_image[0])
+    captcha = np.invert(thresh)
     labelled_captcha = measure.label(captcha)
 
     character_dimensions = (0.20*captcha.shape[0], 0.8*captcha.shape[0], 0.03*captcha.shape[1], 0.25*captcha.shape[1])
@@ -42,9 +40,7 @@ for filename in os.listdir(base_dir):
             #     edgecolor="red",linewidth=2, fill=False
             # )
             # ax1.add_patch(rect_border)
-            
-            resized_char = cv2.resize(roi,(20,20))
-            characters.append((x0, resized_char))
+            characters.append((x0, roi))
             # print(regions.bbox)
 
 
@@ -57,6 +53,11 @@ for filename in os.listdir(base_dir):
     for i in characters:
         img = cv2.copyMakeBorder(i[1], 5, 5, 5, 5, cv2.BORDER_CONSTANT)
         img = cv2.resize(img,(20,20))
+        
+        cv2.imshow("windows", img)
+        cv2.waitKey(1000)
+        cv2.destroyAllWindows()
+        
         result = model.predict(img.reshape(1, -1))
         res.append((i[0], result))
 
@@ -66,3 +67,4 @@ for filename in os.listdir(base_dir):
         ans+=str(i[1][0])
 
     print(filename[:6], " : ", ans)
+    break
