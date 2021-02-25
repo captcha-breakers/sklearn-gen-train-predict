@@ -12,7 +12,6 @@ base_dir = "./captchas/" # Input directory to predict from
 
 for filename in os.listdir(base_dir):
     """Segmentation"""
-    filename="ABCDEF.png"
     image = cv2.imread(base_dir+filename)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
     _, thresh = cv2.threshold(gray, 120, 255 , cv2.THRESH_BINARY)
@@ -51,7 +50,7 @@ for filename in os.listdir(base_dir):
             characters.append((x0, roi))
             # print(regions.bbox)
     
-    plt.show()
+    # plt.show()
 
     """PredictCharacters"""
     model_file = "./sav/model.sav"
@@ -59,13 +58,13 @@ for filename in os.listdir(base_dir):
 
     res = []
     for i in characters:
-        pdg = 3
-        img = cv2.copyMakeBorder(i[1], pdg, pdg, pdg, pdg, cv2.BORDER_CONSTANT)
+        x_p,y_p = 5,8
+        img = cv2.copyMakeBorder(i[1], x_p, x_p, y_p, y_p, cv2.BORDER_CONSTANT)
         img = cv2.resize(img,(20,20))
         
-        # cv2.imshow("windows", img)
-        # cv2.waitKey(1000)
-        # cv2.destroyAllWindows()
+        cv2.imshow("windows", img)
+        cv2.waitKey(1000)
+        cv2.destroyAllWindows()
         
         result = model.predict(img.reshape(1, -1))
         res.append((i[0], result))

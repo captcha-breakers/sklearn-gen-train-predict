@@ -1,8 +1,10 @@
+PY:= python3
+
 char:
-	python3 char-gen.py
+	$(PY) char-gen.py
 cap:
-	python3 captcha-gen.py
+	$(PY) captcha-gen.py
 t:
-	python3 train.py
+	$(PY) train.py
 p:
-	python3 predict.py
+	$(PY) predict.py

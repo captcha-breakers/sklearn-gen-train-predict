@@ -2,6 +2,7 @@ from sklearn import svm
 import numpy as np
 import pickle
 from sklearn.model_selection import cross_val_score
+from string import ascii_uppercase, ascii_lowercase, digits
 import os
 import cv2
 import random
@@ -18,7 +19,7 @@ images = []
 
 print("Reading images...")
 # for f in os.listdir(base_dir):
-for f in ['A', 'B', 'C', 'D', 'E', 'F']:
+for f in ascii_uppercase[:6]:
     for file in os.listdir(base_dir+f)[:1000]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = np.invert(img)
