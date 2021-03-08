@@ -11,7 +11,7 @@ from string import ascii_uppercase, ascii_lowercase, digits
 
 os.system("rm -rf new_data; mkdir -p new_data")
 
-all_char = ascii_uppercase+ascii_lowercase+digits
+all_char = ascii_uppercase#+ascii_lowercase+digits
 myfonts = [ImageFont.truetype(font="./font/"+i,size=80) 
     for i in os.listdir("./font/")]
 
@@ -19,7 +19,6 @@ myfonts = [ImageFont.truetype(font="./font/"+i,size=80)
 for char in all_char:
     print(char)
     for ind in range(1000):
-
         out = Image.new("RGB", (100, 100), (255, 255, 255))
         font = myfonts[randint(0, len(myfonts)-1)]
         d = ImageDraw.Draw(out)
