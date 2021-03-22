@@ -52,9 +52,9 @@ filename = './sav/model.sav'
 pickle.dump(clf, open(filename, 'wb'))
 print("SAV generation complete.")
 
-cross_validation(clf, 5, X, y)
-print("Cross validation complete.")
+# cross_validation(clf, 5, X, y)
+# print("Cross validation complete.")
 
-for i in X:clf.predict(i.reshape(1, -1))
-print(clf.score(X, y))
-print("Score complete.")
+# for i in X:clf.predict(i.reshape(1, -1))
+# print(clf.score(X, y))
+# print("Score complete.")

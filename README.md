@@ -1,5 +1,10 @@
 # Captcha detection using Support Vector Machines
 
+## How to run?
+ - `make new`: creating the new character data
+ - `make t`: training
+ - `make p`: predicting on raw tests
+
 ## Files
 ```
 .
