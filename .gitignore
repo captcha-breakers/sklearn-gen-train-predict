@@ -2,7 +2,7 @@
 
 captchas/
 chars/
-font/
+# font/
 new_data/
 sav/
 
