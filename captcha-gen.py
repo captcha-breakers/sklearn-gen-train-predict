@@ -3,7 +3,7 @@ from random import random, choices
 import numpy as np
 import cv2
 import os
-from string import ascii_uppercase, ascii_lowercase, digits
+from string import ascii_uppercase#, ascii_lowercase, digits
 
 for _ in range(100):
     img=np.zeros(shape=(70,185,3),dtype=np.uint8)

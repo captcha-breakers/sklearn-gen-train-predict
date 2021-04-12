@@ -21,6 +21,7 @@ print("Reading images...")
 for f in ascii_uppercase:
     for file in os.listdir(base_dir+f):
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
+        img = cv2.resize(img, (20, 20))
         img = np.array(img).ravel()
         img = img.reshape(-1)
         
@@ -42,6 +43,8 @@ def cross_validation(model, num_of_fold, train_data, train_label):
 
 print("Fit started...")
 X,y = [],[]
+print(len(images))
+
 for i in images:X.append(i[0]),y.append(i[1])
 clf = svm.SVC(C=1, kernel="linear") #SVM Classifier
 clf.fit(X, y)
