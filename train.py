@@ -19,7 +19,7 @@ images = []
 
 print("Reading images...")
 for f in ascii_uppercase:
-    for file in os.listdir(base_dir+f):
+    for file in os.listdir(base_dir+f)[:20]:
         img = cv2.imread(base_dir+f+"/"+file, cv2.IMREAD_GRAYSCALE)
         img = cv2.resize(img, (20, 20))
         img = np.array(img).ravel()
